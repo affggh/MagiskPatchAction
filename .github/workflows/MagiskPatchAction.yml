@@ -56,6 +56,7 @@ jobs:
         
     - name: 修补镜像
       run: |
+        find ./
         if [ -f init_boot.img ]; then
            sudo sh "${{ github.workspace }}/payload/MagiskPatchActionEXTRA/boot_patch.sh" "${{ github.workspace }}/payload/init_boot.img"
         else
