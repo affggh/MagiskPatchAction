@@ -38,15 +38,15 @@ jobs:
           mkdir payload
           dd if=payload.bin of=payload.zip bs=1 skip=202
           unzip payload.zip -d payload/
-          cd payload/
+          cd payload
+          # Extract zip file
+          unzip *.zip
+          cd ..
         fi
-        # Extract zip file
-        unzip *.zip
         
     - name: 下载 Magisk
       run: |
         git clone https://github.com/tosasitill/MagiskPatchActionEXTRA.git
-        cd MagiskPatchActionEXTRA/
 
         
     - name: 获取变量
@@ -58,9 +58,9 @@ jobs:
       run: |
         find ./
         if [ -f init_boot.img ]; then
-           sudo sh "${{ github.workspace }}/payload/MagiskPatchActionEXTRA/boot_patch.sh" "${{ github.workspace }}/payload/init_boot.img"
+           sudo sh "./MagiskPatchActionEXTRA/boot_patch.sh" "${{ github.workspace }}/payload/init_boot.img"
         else
-           sudo sh "${{ github.workspace }}/payload/MagiskPatchActionEXTRA/boot_patch.sh" "${{ github.workspace }}/payload/boot.img"
+           sudo sh "./MagiskPatchActionEXTRA/boot_patch.sh" "${{ github.workspace }}/payload/boot.img"
         fi
 
     - name: 上传至 Github Releases
